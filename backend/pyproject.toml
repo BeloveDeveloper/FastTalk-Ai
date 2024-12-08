@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "neurogram"
+version = "0.1.0"
+description = ""
+authors = ["beloved <morsot105@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "cryptoapp", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.6"
+uvicorn = "^0.32.1"
+sqlalchemy = "^2.0.36"
+alembic = "^1.14.0"
+bcrypt = "^4.2.1"
+pyjwt = "^2.10.1"
+dishka = "^1.4.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
