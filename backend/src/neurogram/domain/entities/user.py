@@ -11,5 +11,5 @@ class User:
     phone_number: str
     password: str
     total_req: int
-    is_primary: bool
+    is_premium: bool
     is_active: bool
