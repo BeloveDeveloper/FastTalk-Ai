@@ -5,7 +5,7 @@ from neurogram.domain.entities.user_id import UserId
 from neurogram.domain.entities.user import User
 from neurogram.domain.exceptions.user import UserDoesNotExistError
 
-# rewrite
+
 class GetUserInteractor(Interactor[UserId, User]):
     def __init__(self, user_gateway: UserGateway):
         self.user_gateway = user_gateway

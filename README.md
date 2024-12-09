@@ -17,6 +17,6 @@ git clone https://github.com/DmitriySergeevic/NeuroGram.git
 **2. Provide env variables:**
 ```bash
 export BOT_TOKEN='Your telegram bot token'
-export DB_URI='Your db_uri'
+export DB_URL='Your db_url'
 export JWT_SECRET='Some secret long string to work with JWT tokens'
 ```
