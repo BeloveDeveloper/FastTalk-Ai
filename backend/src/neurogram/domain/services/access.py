@@ -1,5 +1,5 @@
 from backend.src.neurogram.domain.entities.user import User
-from backend.src.neurogram.domain.exceptions.access import RequestLimitExceededError, UserNotActiveError
+from neurogram.domain.exceptions.user import RequestLimitExceededError, UserNotActiveError
 
 
 class AccessService:
