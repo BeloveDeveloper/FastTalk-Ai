@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["beloved <morsot105@gmail.com>"]
 readme = "README.md"
-packages = [{ include = "cryptoapp", from = "src" }]
+packages = [{ include = "neurogram", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"
