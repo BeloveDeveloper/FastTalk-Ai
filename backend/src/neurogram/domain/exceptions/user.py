@@ -15,3 +15,7 @@ class RequestLimitExceededError(DomainError):
 
 class UserNotActiveError(DomainError):
     pass
+
+
+class UserDoesNotExistError(DomainError):
+    pass

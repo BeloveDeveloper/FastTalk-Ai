@@ -3,7 +3,7 @@ from dataclasses import replace
 from neurogram.application.interfaces.interactor import Interactor
 from neurogram.application.interfaces.uow import UoW
 from neurogram.application.interfaces.gateways.user import UserGateway
-from neurogram.application.interfaces.hasher import IPasswordHasher
+from neurogram.application.interfaces.hasher import PasswordHasher
 from neurogram.application.dto.user import CreateUserDTO
 from neurogram.domain.entities.user import User
 from neurogram.domain.exceptions.user import UserAlreadyExistsError
@@ -13,7 +13,7 @@ class RegisterInteractor(Interactor[CreateUserDTO, User]):
     def __init__(
         self,
         user_gateway: UserGateway,
-        hash_service: IPasswordHasher,
+        hash_service: PasswordHasher,
         uow: UoW,
     ):
         self.user_gateway = user_gateway
@@ -31,5 +31,5 @@ class RegisterInteractor(Interactor[CreateUserDTO, User]):
         user_data = replace(data, password=hashed_password)
         user = await self.user_gateway.add(user_data)
         await self.uow.commit()
-        
+
         return user
