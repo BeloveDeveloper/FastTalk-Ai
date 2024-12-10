@@ -14,14 +14,14 @@ class InteractorProvider(Provider):
     ) -> PasswordHasher:
         return PasswordHasher()
 
-    @provide(scope=Scope.APP)
+    @provide(scope=Scope.REQUEST)
     def get_user_interactor(
             self, 
             user_gateway: UserGateway
     ) -> GetUserInteractor:
         return GetUserInteractor(user_gateway)
 
-    @provide(scope=Scope.APP)
+    @provide(scope=Scope.REQUEST)
     def get_register_interactor(
             self, 
             user_gateway: UserGateway,

@@ -17,10 +17,15 @@ class SqlUserGateway(UserGateway):
 
     def _load(self, row: Row[Any]) -> User:
         return User(
-            id=row.user_id,
+            id=row.id,
             username=row.username,
-            is_active=row.is_active,
             email=row.email,
+            telegram_id=row.telegram_id,
+            phone_number=row.phone_number,
+            password=row.password_hash,
+            total_req=row.total_req,
+            is_premium=row.is_premium,
+            is_active=row.is_active,
         )
     
     async def add(self, user: CreateUserDTO) -> User:
@@ -33,14 +38,15 @@ class SqlUserGateway(UserGateway):
                 phone_number=user.phone_number,
                 password_hash=user.password,
             )
-            .returning(UserDB.user_id, UserDB.username)
+            .returning(UserDB.id)
         )
-        result = (await self.session.execute(statement)).one()
-        return self._load(result)
+        r = (await self.session.execute(statement)).one()
+        print(r)
+        return
 
     async def change_active_status(self, user_id: int, is_active: bool) -> None:
         stmt = (
-            Update(UserDB).where(UserDB.user_id == user_id).values(is_active=is_active)
+            Update(UserDB).where(UserDB.id == user_id).values(is_active=is_active)
         )
         await self.session.execute(stmt)
         return
@@ -62,12 +68,12 @@ class SqlUserGateway(UserGateway):
         statement = select(UserDB).where(UserDB.telegram_id == tg_id)
         result = (await self.session.execute(statement)).one_or_none()
         if result:
-            return self._load(result)
+            return self._load(result[0])
         return 
 
     async def get_by_id(self, user_id: int) -> Optional[User]:
-        statement = select(UserDB).where(UserDB.user_id == user_id)
+        statement = select(UserDB).where(UserDB.id == user_id)
         result = (await self.session.execute(statement)).one_or_none()
         if result:
-            return self._load(result)
+            return self._load(result[0])
         return 

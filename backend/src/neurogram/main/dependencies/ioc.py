@@ -1,12 +1,12 @@
 from dishka import make_async_container
 
 from .service import ServiceProvider
-from .database import InfrastructureProvider
-from .application import ApplicationProvider
+from .database import DatabaseProvider
+from .application import InteractorProvider
 
 
-provider = make_async_container(
+async_container = make_async_container(
     ServiceProvider(),
-    InfrastructureProvider(),
-    ApplicationProvider(),
+    DatabaseProvider(),
+    InteractorProvider(),
 )

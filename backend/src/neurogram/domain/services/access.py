@@ -1,4 +1,4 @@
-from backend.src.neurogram.domain.entities.user import User
+from neurogram.domain.entities.user import User
 from neurogram.domain.exceptions.user import RequestLimitExceededError, UserNotActiveError
 
 
