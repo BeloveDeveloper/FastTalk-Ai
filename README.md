@@ -1,6 +1,6 @@
 # NeuroGram 🧠
 
-This is my first pet project for python. I aimed to practice and apply the principles of clean architecture.
+This project aims to seamlessly integrate your language model into a user-friendly web platform and Telegram bot, providing users with an interactive and engaging experience. In this project, I am trying to use the principles of clean architecture to ensure the reliability, maintainability and scalability of the application
 
 ## Technologies Used
 
@@ -23,7 +23,6 @@ export JWT_SECRET='Some secret long string to work with JWT tokens'
 **3. Install poetry:**
 ```bash
 cd backend
-poetry init
 poetry install
 ```
 **4. Start Uvicorn:**
