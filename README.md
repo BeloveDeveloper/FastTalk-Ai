@@ -20,3 +20,13 @@ export BOT_TOKEN='Your telegram bot token'
 export DB_URL='postgresql+asyncpg://postgres:postgres@localhost:5432/neurogram'
 export JWT_SECRET='Some secret long string to work with JWT tokens'
 ```
+**3. Install poetry:**
+```bash
+cd backend
+poetry init
+poetry install
+```
+**1. Clone the repository:**
+```bash
+uvicorn src.neurogram.main.web:app --reload
+```
