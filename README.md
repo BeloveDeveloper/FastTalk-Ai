@@ -1,12 +1,12 @@
 # NeuroGram 🧠
 
-This is my first pet project. I aimed to practice and apply the principles of clean architecture.
+This is my first pet project for python. I aimed to practice and apply the principles of clean architecture.
 
 ## Technologies Used
 
 - **Frontend:** Svelte 5
-- **Bot:** Aiogram
-- **Backend:** FastAPI
+- **Bot:** Aiogram + AiogramDialog
+- **Backend:** Python (FastAPI, SqlAlchemy, Dishka)
 
 ## Installation and Setup
 
@@ -17,6 +17,6 @@ git clone https://github.com/DmitriySergeevic/NeuroGram.git
 **2. Provide env variables:**
 ```bash
 export BOT_TOKEN='Your telegram bot token'
-export DB_URL='Your db_url'
+export DB_URL='postgresql+asyncpg://postgres:postgres@localhost:5432/neurogram'
 export JWT_SECRET='Some secret long string to work with JWT tokens'
 ```
