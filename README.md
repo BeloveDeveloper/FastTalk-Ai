@@ -26,7 +26,7 @@ cd backend
 poetry init
 poetry install
 ```
-**1. Clone the repository:**
+**4. Start Uvicorn:**
 ```bash
 uvicorn src.neurogram.main.web:app --reload
 ```
