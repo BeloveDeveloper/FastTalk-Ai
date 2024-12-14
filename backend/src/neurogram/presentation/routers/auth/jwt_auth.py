@@ -15,3 +15,16 @@ async def signup(
 ) -> dict[str, str]:
     await register(user)
     return {"message": "User successfully registered"}
+
+
+@auth_router.post("/login/")
+async def login() -> str:
+    ...
+    return str
+
+
+@auth_router.post("/logout/")
+async def logout() -> dict[str, str]:
+    ...
+    return {"message": "Successfully logged out"}
+
