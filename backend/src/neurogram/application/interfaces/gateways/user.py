@@ -14,16 +14,13 @@ class UserGateway(Protocol):
     async def change_active_status(self, user_id: int, is_active: bool) -> None:
         raise NotImplementedError
 
-
     @abstractmethod
     async def check_data_unique(self, data: CreateUserDTO) -> bool:
         raise NotImplementedError
 
-
     @abstractmethod
     async def get_by_tg_id(self, tg_id: int) -> Optional[User]:
         raise NotImplementedError
-
 
     @abstractmethod
     async def get_by_id(self, user_id: int) -> Optional[User]:

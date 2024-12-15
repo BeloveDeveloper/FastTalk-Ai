@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Optional
 
+from neurogram.domain.entities.user_id import UserId
+
 
 @dataclass
 class CreateUserDTO:
@@ -13,4 +15,5 @@ class CreateUserDTO:
 
 @dataclass
 class GetUserDto:
-    id: int
+    id: UserId
+    

@@ -17,14 +17,19 @@ async def signup(
     return {"message": "User successfully registered"}
 
 
-@auth_router.post("/login/")
+@auth_router.post("/login")
 async def login() -> str:
     ...
     return str
 
 
-@auth_router.post("/logout/")
+@auth_router.post("/refresh")
+async def refresh_token() -> str:
+    ...
+    return str
+
+
+@auth_router.post("/logout")
 async def logout() -> dict[str, str]:
     ...
     return {"message": "Successfully logged out"}
-

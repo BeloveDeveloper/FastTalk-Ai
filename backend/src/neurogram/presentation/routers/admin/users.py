@@ -11,13 +11,13 @@ from neurogram.domain.entities.user import User
 admin_router = APIRouter(route_class=DishkaRoute)
 
 
-@admin_router.get("/")
+@admin_router.get("/users")
 async def get_users():
     ...
     return 
 
 
-@admin_router.get("/{id}")
+@admin_router.get("/users/{id}")
 async def get_user_by_id(
         get_user: Depends[GetUserInteractor],
         id: UserId
@@ -26,7 +26,7 @@ async def get_user_by_id(
     return user
 
 
-@admin_router.put("/{id}/active_status")
+@admin_router.put("/users/{id}/active_status")
 async def change_active_status(
         id: UserId
 ):
