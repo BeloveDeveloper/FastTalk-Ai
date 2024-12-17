@@ -10,8 +10,8 @@ auth_router = APIRouter(route_class=DishkaRoute)
 
 @auth_router.post("/signup")
 async def signup(
-    register: Depends[RegisterInteractor],
-    user: CreateUserDTO,
+        register: Depends[RegisterInteractor],
+        user: CreateUserDTO,
 ) -> dict[str, str]:
     await register(user)
     return {"message": "User successfully registered"}

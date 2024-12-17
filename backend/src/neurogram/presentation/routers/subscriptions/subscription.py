@@ -11,6 +11,13 @@ async def get_subscriptions():
     ...
     return 
 
+@sub_router.get("/{id}")
+async def get_subscription_by_id(
+        id: int
+):
+    ...
+    return 
+
 @sub_router.post("/")
 async def create_subscription():
     ...

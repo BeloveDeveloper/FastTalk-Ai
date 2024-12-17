@@ -9,7 +9,7 @@ from neurogram.domain.entities.user import User
 from neurogram.domain.exceptions.user import UserAlreadyExistsError
 
 
-class RegisterInteractor(Interactor[CreateUserDTO, User]):
+class RegisterInteractor(Interactor[CreateUserDTO, None]):
     def __init__(
         self,
         user_gateway: UserGateway,
@@ -21,15 +21,18 @@ class RegisterInteractor(Interactor[CreateUserDTO, User]):
         self.uow = uow
 
 
-    async def __call__(self, data: CreateUserDTO) -> User:
-        user_exist = await self.user_gateway.check_data_unique(data)
+    async def __call__(self, data: CreateUserDTO) -> None:
+        user_exist = await self.user_gateway.check_data_unique(
+            username=data.username,
+            telegram_id=data.telegram_id,
+            email=data.email
+        )
 
         if user_exist:
-            raise UserAlreadyExistsError(data.username)
+            raise UserAlreadyExistsError
         
         hashed_password = self.hash_service.hash(data.password)
         user_data = replace(data, password=hashed_password)
-        user = await self.user_gateway.add(user_data)
+        await self.user_gateway.add(user_data)
         await self.uow.commit()
-
-        return user
+        return 

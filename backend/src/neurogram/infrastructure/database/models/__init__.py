@@ -1,4 +1,9 @@
+__all__ = [
+    "Base", 
+    "UserDB", 
+    "SubcriptionDB"
+]
+
 from .base import Base
 from .user import UserDB
-
-__all__ = ["Base", "UserDB"]
+from .subcription import SubcriptionDB

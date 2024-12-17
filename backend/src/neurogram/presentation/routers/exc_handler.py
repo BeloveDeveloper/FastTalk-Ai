@@ -1,26 +1,18 @@
-from fastapi import Request
+from neurogram.domain.exceptions import user as user_exc
+from neurogram.domain.exceptions import subcription as sub_exc
 from starlette.responses import JSONResponse
+from fastapi import Request
 
 
-async def error_response(
-        request: Request,
-        status_code: int,
-        detail: str
-) -> JSONResponse:
+error_map = {
+    user_exc.UserAlreadyExistsError: (409, "User already exists"),
+    user_exc.AuthenticationError: (401, "Invalid login or password"),
+    user_exc.RequestLimitExceededError: (429, "Request limit exceeded"),
+    user_exc.UserDoesNotExistError: (404, "User does not exist"),
+    user_exc.UserNotActiveError: (403, "User not active"),
+    sub_exc.SubcriptionAlreadyExistsError: (409, "Subscription already exists")
+}
+
+async def generic_error_handler(request: Request, exc: Exception) -> JSONResponse:
+    status_code, detail = error_map.get(type(exc), (500, "Internal Server Error"))
     return JSONResponse(status_code=status_code, content={"detail": detail})
-
-
-async def user_already_exists_error(request: Request, exception: Exception) -> JSONResponse:
-    return await error_response(request, 409, "User already exists")
-
-async def authentication_error(request: Request, exception: Exception) -> JSONResponse:
-    return await error_response(request, 401, "Invalid login or password")
-
-async def request_limit_exceeded_error(request: Request, exception: Exception) -> JSONResponse:
-    return await error_response(request, 429, "Request limit exceeded")
-
-async def user_does_not_exist_error(request: Request, exception: Exception) -> JSONResponse:
-    return await error_response(request, 404, "User does not exist")
-
-async def user_not_active_error(request: Request, exception: Exception) -> JSONResponse:
-    return await error_response(request, 403, "User not active")

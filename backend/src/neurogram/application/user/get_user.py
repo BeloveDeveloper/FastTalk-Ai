@@ -12,8 +12,8 @@ class GetUserInteractor(Interactor[UserId, User]):
 
     async def __call__(self, data: GetUserDto) -> User:
         user = await self.user_gateway.get_by_id(data.id)
-
+    
         if not user:
-            raise UserDoesNotExistError()
+            raise UserDoesNotExistError
 
         return user

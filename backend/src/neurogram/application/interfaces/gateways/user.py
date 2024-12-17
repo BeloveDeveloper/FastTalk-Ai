@@ -7,7 +7,7 @@ from neurogram.application.dto.user import CreateUserDTO
 
 class UserGateway(Protocol):
     @abstractmethod
-    async def add(self, user: CreateUserDTO) -> User:
+    async def add(self, user: CreateUserDTO) -> None:
         raise NotImplementedError
 
     @abstractmethod
@@ -15,7 +15,9 @@ class UserGateway(Protocol):
         raise NotImplementedError
 
     @abstractmethod
-    async def check_data_unique(self, data: CreateUserDTO) -> bool:
+    async def check_data_unique(
+            self, username: str, telegram_id: int, email: str
+        ) -> bool:
         raise NotImplementedError
 
     @abstractmethod
