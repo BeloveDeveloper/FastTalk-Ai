@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Subcription:
+class Subscription:
     id: int
     title: str
     description: str

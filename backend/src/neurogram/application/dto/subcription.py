@@ -3,7 +3,7 @@ from typing import Optional
 
 
 @dataclass
-class CreateSubcriptionDTO:
+class CreateSubscriptionDTO:
     title: str
     description: str
     price: int
@@ -11,7 +11,7 @@ class CreateSubcriptionDTO:
 
 
 @dataclass
-class UpdateSubcriptionDTO:
+class UpdateSubscriptionDTO:
     title: Optional[str] = None
     description: Optional[str] = None
     price: Optional[int] = None
@@ -19,5 +19,5 @@ class UpdateSubcriptionDTO:
 
 
 @dataclass
-class DeleteSubcriptionDTO:
+class DeleteSubscriptionDTO:
     id: int

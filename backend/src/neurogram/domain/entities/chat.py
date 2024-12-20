@@ -5,3 +5,4 @@ from dataclasses import dataclass
 class Chat:
     id: int
     user_id: int
+    title: str

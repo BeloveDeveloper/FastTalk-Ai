@@ -1,8 +1,7 @@
 from sqlalchemy.orm import Session
 from typing import Optional, Any
 
-from sqlalchemy import Update, exists, or_, select, Row
-from sqlalchemy.dialects.postgresql import Insert
+from sqlalchemy import Insert, Update, exists, or_, select, Row
 
 from neurogram.application.interfaces.gateways.user import UserGateway
 from neurogram.domain.entities.user import User
@@ -10,7 +9,7 @@ from neurogram.infrastructure.database.models import UserDB
 from neurogram.application.dto.user import CreateUserDTO
 
 
-class SqlUserGateway(UserGateway):
+class UserMapper(UserGateway):
 
     def __init__(self, session: Session):
         self.session = session
@@ -24,7 +23,7 @@ class SqlUserGateway(UserGateway):
             phone_number=row.phone_number,
             password=row.password_hash,
             total_req=row.total_req,
-            is_premium=row.is_premium,
+            sub_id=row.is_premium,
             is_active=row.is_active,
         )
     

@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import (
 
 from neurogram.application.interfaces.gateways.user import UserGateway
 from neurogram.application.interfaces.uow import UoW
-from neurogram.infrastructure.database.gateways.user import SqlUserGateway
+from neurogram.infrastructure.database.gateways.user import UserMapper
 
 
 
@@ -52,5 +52,5 @@ class DatabaseProvider(Provider):
     @provide(scope=Scope.REQUEST, provides=UserGateway)
     async def get_user_gateway(
             self, session: AsyncSession
-    ) -> SqlUserGateway:
-        return SqlUserGateway(session)
+    ) -> UserMapper:
+        return UserMapper(session)

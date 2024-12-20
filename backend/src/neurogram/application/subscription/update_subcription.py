@@ -1,12 +1,8 @@
-from dataclasses import replace
-
 from neurogram.application.interfaces.interactor import Interactor
 from neurogram.application.interfaces.uow import UoW
 from neurogram.application.interfaces.gateways.subcription import SubcriptionGateway
-from neurogram.application.interfaces.hasher import IPasswordHasher
 from neurogram.application.dto.subcription import UpdateSubcriptionDTO
-from neurogram.domain.entities.subscription import Subcription
-from neurogram.domain.exceptions.subcription import SubcriptionAlreadyExistsError
+from neurogram.domain.exceptions.subscription import SubcriptionAlreadyExistsError
 
 
 class UpdateSubcriptionInteractor(Interactor[UpdateSubcriptionDTO, None]):

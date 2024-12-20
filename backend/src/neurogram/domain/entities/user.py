@@ -12,6 +12,7 @@ class User:
     telegram_id: Optional[int]
     phone_number: Optional[str]
     password: Optional[str]
+
     total_req: int
-    is_premium: bool
+    sub_id: int
     is_active: bool

@@ -1,20 +1,20 @@
 from abc import abstractmethod
-from typing import Optional, Protocol
+from typing import Protocol
 
-from neurogram.domain.entities.subscription import Subcription
+from neurogram.domain.entities.subscription import Subscription
 from neurogram.application.dto.subcription import (
-    CreateSubcriptionDTO,
-    UpdateSubcriptionDTO
+    CreateSubscriptionDTO,
+    UpdateSubscriptionDTO
 )
 
 
-class SubcriptionGateway(Protocol):
+class SubscriptionGateway(Protocol):
     @abstractmethod
-    async def add(self, subcription: CreateSubcriptionDTO) -> None:
+    async def add(self, subscription: CreateSubscriptionDTO) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    async def update(self, subcription: UpdateSubcriptionDTO) -> None:
+    async def update(self, subscription: UpdateSubscriptionDTO) -> None:
         raise NotImplementedError
 
     @abstractmethod
@@ -26,5 +26,5 @@ class SubcriptionGateway(Protocol):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_subcriptions(self) -> list[Subcription]:
+    async def get_subcriptions(self) -> list[Subscription]:
         raise NotImplementedError

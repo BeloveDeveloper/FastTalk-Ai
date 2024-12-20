@@ -1,9 +1,9 @@
 __all__ = [
     "Base", 
     "UserDB", 
-    "SubcriptionDB"
+    "SubscriptionDB"
 ]
 
 from .base import Base
 from .user import UserDB
-from .subcription import SubcriptionDB
+from .subscription import SubscriptionDB
