@@ -1,29 +1,19 @@
 from dishka import Provider, Scope, provide
 
 from app.application.interfaces.uow import UoW
-
 from app.application.subscription.get_subscriptions import GetSubscriptionsInteractor
 from app.application.subscription.get_sub_by_id import GetSubscriptionInteractor
 from app.application.subscription.create_subscription import CreateSubscriptionInteractor
 from app.application.subscription.update_subscription import UpdateSubscriptionInteractor
 from app.application.subscription.delete_subscription import DeleteSubscriptionInteractor
-
 from app.application.user.get_user import GetUserInteractor
 from app.application.user.register import RegisterInteractor
-
 from app.application.interfaces.gateways.user import UserGateway
 from app.application.interfaces.gateways.subscription import SubscriptionGateway
-
 from app.infrastructure.auth.password_hasher import PasswordHasher
 
 
-class InteractorProvider(Provider):
-    @provide(scope=Scope.APP)
-    def get_password_hasher(
-            self
-    ) -> PasswordHasher:
-        return PasswordHasher()
-
+class UserProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def get_user_interactor(
             self, 
@@ -43,7 +33,9 @@ class InteractorProvider(Provider):
             uow,
             password_hasher
         )
+    
 
+class SubscriptionProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def get_subcriptions_interactor(
             self, 
@@ -90,3 +82,10 @@ class InteractorProvider(Provider):
             sub_gateway,
             uow,
         )
+    
+
+class ApplicationProvieder(
+    UserProvider,
+    SubscriptionProvider,
+):
+    ...

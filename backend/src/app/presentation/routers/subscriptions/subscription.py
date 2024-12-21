@@ -43,7 +43,7 @@ async def create_subscription(
         data: CreateSubscriptionDTO
 ):
     await create_sub(data)
-    return {"message": "Subscription successfully creates"}
+    return {"message": "Subscription successfully created"}
 
 
 @sub_router.put("/")

@@ -12,10 +12,18 @@ from sqlalchemy.ext.asyncio import (
 from app.application.interfaces.gateways.user import UserGateway
 from app.application.interfaces.gateways.subscription import SubscriptionGateway
 from app.application.interfaces.uow import UoW
+from app.infrastructure.auth.password_hasher import PasswordHasher
 
 from app.infrastructure.database.mappers.user import UserMapper
 from app.infrastructure.database.mappers.subscription import SubcriptionMapper
 
+
+class AuthProvider(Provider):
+    @provide(scope=Scope.APP)
+    def get_password_hasher(
+            self
+    ) -> PasswordHasher:
+        return PasswordHasher()
 
 
 class DatabaseProvider(Provider):
@@ -38,7 +46,6 @@ class DatabaseProvider(Provider):
         session_pool = async_sessionmaker(bind=engine, expire_on_commit=False)
         return session_pool
 
-
     @provide(scope=Scope.REQUEST)
     async def get_session(
             self, session_pool: async_sessionmaker[AsyncSession]
@@ -52,6 +59,8 @@ class DatabaseProvider(Provider):
     ) -> AsyncIterator[AsyncSession]:
         return session
 
+
+class MapperProvider(Provider):
     @provide(scope=Scope.REQUEST, provides=UserGateway)
     async def get_user_mapper(
             self, session: AsyncSession
@@ -63,3 +72,11 @@ class DatabaseProvider(Provider):
             self, session: AsyncSession
     ) -> SubcriptionMapper:
         return SubcriptionMapper(session)
+    
+
+class InfrastructureProvider(
+    AuthProvider,
+    DatabaseProvider,
+    MapperProvider
+):
+    ...
