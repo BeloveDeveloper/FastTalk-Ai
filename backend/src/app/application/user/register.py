@@ -19,7 +19,6 @@ class RegisterInteractor(Interactor[CreateUserDTO, None]):
         self.hash_service = hash_service
         self.uow = uow
 
-
     async def __call__(self, data: CreateUserDTO) -> None:
         user_exist = await self.user_gateway.check_data_unique(
             username=data.username,
@@ -29,9 +28,9 @@ class RegisterInteractor(Interactor[CreateUserDTO, None]):
 
         if user_exist:
             raise UserAlreadyExistsError
-        
+
         hashed_password = self.hash_service.hash(data.password)
         user_data = replace(data, password=hashed_password)
         await self.user_gateway.add(user_data)
         await self.uow.commit()
-        return 
+        return

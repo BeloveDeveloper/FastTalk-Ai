@@ -12,8 +12,9 @@ from sqlalchemy.ext.asyncio import (
 from app.application.interfaces.gateways.user import UserGateway
 from app.application.interfaces.gateways.subscription import SubscriptionGateway
 from app.application.interfaces.uow import UoW
-from app.infrastructure.auth.password_hasher import PasswordHasher
-
+from app.infrastructure.auth.jwt_auth.password_hasher import PasswordHasher
+from app.infrastructure.auth.jwt_auth.auth import AuthService
+from app.infrastructure.auth.jwt_auth.jwt_service import JwtProcessor
 from app.infrastructure.database.mappers.user import UserMapper
 from app.infrastructure.database.mappers.subscription import SubcriptionMapper
 
@@ -24,6 +25,26 @@ class AuthProvider(Provider):
             self
     ) -> PasswordHasher:
         return PasswordHasher()
+
+    @provide(scope=Scope.APP)
+    def get_jwt_service(self) -> JwtProcessor:
+        return JwtProcessor(
+            private_key=os.getenv("JWT_SECRET"),
+            algorithm="HS256"
+        )
+
+    @provide(scope=Scope.REQUEST)
+    async def get_auth_service(
+            self,
+            user_gateway: UserGateway,
+            hasher: PasswordHasher,
+            jwt: JwtProcessor,
+    ) -> AuthService:
+        return AuthService(
+            user_gateway,
+            hasher,
+            jwt
+        )
 
 
 class DatabaseProvider(Provider):
@@ -38,7 +59,7 @@ class DatabaseProvider(Provider):
             echo=False,
         )
         return engine
-    
+
     @provide(scope=Scope.APP)
     def get_session_pool(
             self, engine: AsyncEngine
@@ -66,13 +87,13 @@ class MapperProvider(Provider):
             self, session: AsyncSession
     ) -> UserMapper:
         return UserMapper(session)
-    
+
     @provide(scope=Scope.REQUEST, provides=SubscriptionGateway)
     async def get_subscription_mapper(
             self, session: AsyncSession
     ) -> SubcriptionMapper:
         return SubcriptionMapper(session)
-    
+
 
 class InfrastructureProvider(
     AuthProvider,

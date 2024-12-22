@@ -5,6 +5,12 @@ from app.domain.entities.user_id import UserId
 
 
 @dataclass
+class UserLoginDTO:
+    email: str
+    password: str
+
+
+@dataclass
 class CreateUserDTO:
     username: str
     email: Optional[str]
@@ -14,6 +20,12 @@ class CreateUserDTO:
 
 
 @dataclass
-class GetUserDto:
+class GetUserDTO:
     id: UserId
-    
+
+
+@dataclass
+class UserSummaryDTO:
+    id: UserId
+    username: str
+    email: Optional[str]

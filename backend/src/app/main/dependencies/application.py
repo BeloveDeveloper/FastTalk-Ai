@@ -10,7 +10,7 @@ from app.application.user.get_user import GetUserInteractor
 from app.application.user.register import RegisterInteractor
 from app.application.interfaces.gateways.user import UserGateway
 from app.application.interfaces.gateways.subscription import SubscriptionGateway
-from app.infrastructure.auth.password_hasher import PasswordHasher
+from app.infrastructure.auth.jwt_auth.password_hasher import PasswordHasher
 
 
 class UserProvider(Provider):

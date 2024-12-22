@@ -26,7 +26,7 @@ class UserMapper(UserGateway):
             sub_id=row.is_premium,
             is_active=row.is_active,
         )
-    
+
     async def add(self, user: CreateUserDTO) -> None:
         statement = (
             Insert(UserDB)
@@ -39,7 +39,7 @@ class UserMapper(UserGateway):
             )
         )
         await self.session.execute(statement)
-        return 
+        return
 
     async def change_active_status(self, user_id: int, is_active: bool) -> None:
         stmt = (
@@ -50,7 +50,7 @@ class UserMapper(UserGateway):
 
     async def check_data_unique(
             self, username: str, telegram_id: int, email: str
-        ) -> bool:
+    ) -> bool:
         conditions = [UserDB.username == username]
 
         if telegram_id:
@@ -68,10 +68,17 @@ class UserMapper(UserGateway):
         result = (await self.session.execute(statement)).one_or_none()
         if result:
             return self._load(result[0])
-        return 
+        return
 
     async def get_by_id(self, user_id: int) -> Optional[User]:
         statement = select(UserDB).where(UserDB.id == user_id)
+        result = (await self.session.execute(statement)).one_or_none()
+        if result:
+            return self._load(result[0])
+        return
+
+    async def get_by_email(self, email: str) -> Optional[User]:
+        statement = select(UserDB).where(UserDB.email == email)
         result = (await self.session.execute(statement)).one_or_none()
         if result:
             return self._load(result[0])

@@ -1,0 +1,11 @@
+[flake8]
+max-line-length = 120
+exclude =
+    venv,
+    .git,
+    __pycache__,
+    build,
+    dist
+ignore = E203,E501,W503
+extend-ignore = D100,D101,D102,D103,D104
+show-source = true
