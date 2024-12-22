@@ -17,7 +17,7 @@ class UserGateway(Protocol):
     @abstractmethod
     async def check_data_unique(
             self, username: str, telegram_id: int, email: str
-        ) -> bool:
+    ) -> bool:
         raise NotImplementedError
 
     @abstractmethod

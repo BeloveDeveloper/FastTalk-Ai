@@ -16,14 +16,14 @@ from app.infrastructure.auth.jwt_auth.password_hasher import PasswordHasher
 class UserProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def get_user_interactor(
-            self, 
+            self,
             user_gateway: UserGateway
     ) -> GetUserInteractor:
         return GetUserInteractor(user_gateway)
 
     @provide(scope=Scope.REQUEST)
     def get_register_interactor(
-            self, 
+            self,
             user_gateway: UserGateway,
             uow: UoW,
             password_hasher: PasswordHasher
@@ -33,26 +33,26 @@ class UserProvider(Provider):
             uow,
             password_hasher
         )
-    
+
 
 class SubscriptionProvider(Provider):
     @provide(scope=Scope.REQUEST)
     def get_subcriptions_interactor(
-            self, 
+            self,
             sub_gateway: SubscriptionGateway
     ) -> GetSubscriptionsInteractor:
         return GetSubscriptionsInteractor(sub_gateway)
-    
+
     @provide(scope=Scope.REQUEST)
     def get_subcription_interactor(
-            self, 
+            self,
             sub_gateway: SubscriptionGateway
     ) -> GetSubscriptionInteractor:
         return GetSubscriptionInteractor(sub_gateway)
 
     @provide(scope=Scope.REQUEST)
     def get_create_sub_interactor(
-            self, 
+            self,
             sub_gateway: SubscriptionGateway,
             uow: UoW,
     ) -> CreateSubscriptionInteractor:
@@ -60,10 +60,10 @@ class SubscriptionProvider(Provider):
             sub_gateway,
             uow,
         )
-    
+
     @provide(scope=Scope.REQUEST)
     def get_update_sub_interactor(
-            self, 
+            self,
             sub_gateway: SubscriptionGateway,
             uow: UoW,
     ) -> UpdateSubscriptionInteractor:
@@ -71,10 +71,10 @@ class SubscriptionProvider(Provider):
             sub_gateway,
             uow,
         )
-        
+
     @provide(scope=Scope.REQUEST)
     def get_delete_sub_interactor(
-            self, 
+            self,
             sub_gateway: SubscriptionGateway,
             uow: UoW,
     ) -> DeleteSubscriptionInteractor:
@@ -82,7 +82,7 @@ class SubscriptionProvider(Provider):
             sub_gateway,
             uow,
         )
-    
+
 
 class ApplicationProvieder(
     UserProvider,

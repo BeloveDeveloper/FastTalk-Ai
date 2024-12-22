@@ -11,7 +11,7 @@ class GetSubscriptionInteractor(Interactor[GetSubcriptionDTO, Subscription]):
 
     async def __call__(self, data: GetSubcriptionDTO) -> Subscription:
         user = await self.user_gateway.get_subscription_by_id(data.id)
-    
+
         if not user:
             raise SubscriptionDoesNotExistError
 

@@ -9,7 +9,7 @@ user_chat_router = APIRouter(prefix="/chats", route_class=DishkaRoute)
 @user_chat_router.get("/")
 async def get_chats():
     ...
-    return 
+    return
 
 
 @user_chat_router.post("/")
@@ -37,4 +37,4 @@ async def send_message(
     id: int
 ):
     ...
-    return 
+    return

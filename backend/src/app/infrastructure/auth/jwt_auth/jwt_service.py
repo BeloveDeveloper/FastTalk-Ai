@@ -21,8 +21,6 @@ class JwtProcessor:
         self.algorithm = algorithm
 
     def _encode_jwt(self, payload: Dict[str, Any]) -> str:
-        print('<>>>>>>>>>>>>>>>>>>>>', payload)
-        print(type(self.private_key))
         encoded = jwt.encode(
             payload=payload,
             key=self.private_key,

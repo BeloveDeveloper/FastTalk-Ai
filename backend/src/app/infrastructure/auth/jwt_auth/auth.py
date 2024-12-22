@@ -23,7 +23,7 @@ class AuthService:
         if not user:
             raise AuthenticationError
         if not self.hasher.verify(
-            password=login_user.password, hashed_password=user.password
+            password=login_user.password, h_password=user.password
         ):
             raise AuthenticationError
         if not user.is_active:

@@ -21,8 +21,8 @@ class CreateSubscriptionInteractor(Interactor[CreateSubscriptionDTO, None]):
 
         if sub_exist:
             raise SubscriptionAlreadyExistsError
-        
+
         await self.sub_gateway.add(data)
         await self.uow.commit()
 
-        return 
+        return

@@ -9,4 +9,4 @@ user_router = APIRouter(route_class=DishkaRoute)
 @user_router.get("/")
 async def get_user_info():
     ...
-    return 
+    return

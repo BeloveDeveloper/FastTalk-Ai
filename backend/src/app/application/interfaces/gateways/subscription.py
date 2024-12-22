@@ -28,7 +28,7 @@ class SubscriptionGateway(Protocol):
     @abstractmethod
     async def get_subscriptions(self) -> list[Subscription]:
         raise NotImplementedError
-    
+
     @abstractmethod
     async def get_subscription_by_id(
             self, sub_id: int

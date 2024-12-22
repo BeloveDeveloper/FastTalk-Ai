@@ -9,16 +9,16 @@ user_sub_router = APIRouter(prefix='/sub', route_class=DishkaRoute)
 @user_sub_router.get("/")
 async def get_my_sub():
     ...
-    return 
+    return
 
 
 @user_sub_router.post("/purchase")
 async def purchase_subscription():
     ...
-    return 
+    return
 
 
 @user_sub_router.post("/cansel")
 async def cancel_subscription():
     ...
-    return 
+    return

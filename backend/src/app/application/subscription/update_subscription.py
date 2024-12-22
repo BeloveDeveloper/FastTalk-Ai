@@ -2,7 +2,6 @@ from app.application.interfaces.interactor import Interactor
 from app.application.interfaces.uow import UoW
 from app.application.interfaces.gateways.subscription import SubscriptionGateway
 from app.application.dto.subscription import UpdateSubscriptionDTO
-from app.domain.exceptions.subscription import SubscriptionAlreadyExistsError
 
 
 class UpdateSubscriptionInteractor(Interactor[UpdateSubscriptionDTO, None]):
@@ -18,4 +17,4 @@ class UpdateSubscriptionInteractor(Interactor[UpdateSubscriptionDTO, None]):
         await self.sub_gateway.update(data)
         await self.uow.commit()
 
-        return 
+        return

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from typing import List, Optional, Any
+from typing import List, Any
 
-from sqlalchemy import Delete, Insert ,Update, exists, or_, select, Row
+from sqlalchemy import Delete, Insert, Update, exists, select, Row
 
 from app.application.interfaces.gateways.subscription import SubscriptionGateway
 from app.domain.entities.subscription import Subscription
@@ -25,7 +25,7 @@ class SubcriptionMapper(SubscriptionGateway):
             price=row.price,
             req_limit=row.req_limit
         )
-    
+
     async def add(self, subscription: CreateSubscriptionDTO) -> None:
         statement = (
             Insert(SubscriptionDB)
@@ -37,7 +37,7 @@ class SubcriptionMapper(SubscriptionGateway):
             )
         )
         await self.session.execute(statement)
-        return 
+        return
 
     async def update(self, data: UpdateSubscriptionDTO) -> None:
         statement = (
@@ -72,7 +72,7 @@ class SubcriptionMapper(SubscriptionGateway):
         rows = result.fetchall()
         subscriptions = [self._load(row[0]) for row in rows]
         return subscriptions
-    
+
     async def get_subscription_by_id(self, sub_id: int) -> Subscription:
         statement = select(SubscriptionDB).where(SubscriptionDB.id == sub_id)
         result = (await self.session.execute(statement)).one_or_none()

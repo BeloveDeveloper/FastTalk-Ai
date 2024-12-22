@@ -17,4 +17,4 @@ class DeleteSubscriptionInteractor(Interactor[DeleteSubscriptionDTO, None]):
         await self.sub_gateway.delete(data.id)
         await self.uow.commit()
 
-        return 
+        return

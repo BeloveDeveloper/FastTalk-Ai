@@ -1,6 +1,6 @@
 __all__ = [
-    "Base", 
-    "UserDB", 
+    "Base",
+    "UserDB",
     "SubscriptionDB"
 ]
 
