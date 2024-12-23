@@ -5,7 +5,6 @@ import jwt
 import jwt.warnings
 
 from app.domain.entities.user import User
-from app.domain.entities.user_id import UserId
 
 
 @dataclass
@@ -26,7 +25,7 @@ class JwtProcessor:
         )
         return encoded
 
-    def _decode_jwt(self, token: str) -> TokenPayloadDTO:
+    def decode_jwt(self, token: str) -> TokenPayloadDTO:
         data = jwt.decode(jwt=token, key=self.private_key, algorithms=self.algorithm)
         return TokenPayloadDTO(
             sub=int(data["sub"]),
@@ -42,12 +41,3 @@ class JwtProcessor:
         }
         token = self._encode_jwt(jwt_payload)
         return token
-
-    def validate_token(self, token: str) -> UserId:
-        try:
-            payload = self._decode_jwt(token)
-            return UserId(payload.sub)
-        except jwt.ExpiredSignatureError:
-            raise Exception("Token has expired")
-        except jwt.InvalidTokenError:
-            raise Exception("Invalid token")

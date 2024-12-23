@@ -3,7 +3,7 @@ from app.domain.exceptions.user import RequestLimitExceededError, UserNotActiveE
 
 
 class AccessService:
-    def ensure_can_send_request(self, user: User):
+    def ensure_can_send_request(self, user: User) -> None:
         if not user.is_active:
             raise UserNotActiveError("User is not active")
         if user.total_req <= 0:

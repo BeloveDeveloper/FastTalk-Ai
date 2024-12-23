@@ -1,7 +1,9 @@
 import os
 from typing import AsyncIterator
 
-from dishka import Provider, Scope, provide
+from app.domain.exceptions.subscription import TokenNotFoundError
+from dishka import Provider, Scope, from_context, provide
+from fastapi import Request
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     AsyncSession,
@@ -14,12 +16,15 @@ from app.application.interfaces.gateways.subscription import SubscriptionGateway
 from app.application.interfaces.uow import UoW
 from app.infrastructure.auth.jwt_auth.password_hasher import PasswordHasher
 from app.infrastructure.auth.jwt_auth.auth import AuthService
-from app.infrastructure.auth.jwt_auth.jwt_service import JwtProcessor
+from app.infrastructure.auth.jwt_auth.jwt_service import JwtProcessor, TokenPayloadDTO
+from app.infrastructure.auth.jwt_auth.jwt_id_provider import TokenIdProvider
 from app.infrastructure.database.mappers.user import UserMapper
 from app.infrastructure.database.mappers.subscription import SubcriptionMapper
 
 
 class AuthProvider(Provider):
+    request = from_context(provides=Request, scope=Scope.REQUEST)
+
     @provide(scope=Scope.APP)
     def get_password_hasher(self) -> PasswordHasher:
         return PasswordHasher()
@@ -27,6 +32,19 @@ class AuthProvider(Provider):
     @provide(scope=Scope.APP)
     def get_jwt_service(self) -> JwtProcessor:
         return JwtProcessor(private_key=os.getenv("JWT_SECRET"), algorithm="HS256")
+
+    @provide(scope=Scope.REQUEST)
+    def get_token_id_provider(self, token: TokenPayloadDTO) -> TokenIdProvider:
+        return TokenIdProvider(token=token)
+
+    @provide(scope=Scope.REQUEST)
+    def get_token(
+        self, request: Request, token_processor: JwtProcessor
+    ) -> TokenPayloadDTO:
+        token = request.cookies.get("access_token")
+        if not token:
+            raise TokenNotFoundError
+        return token_processor.decode_jwt(token)
 
     @provide(scope=Scope.REQUEST)
     async def get_auth_service(

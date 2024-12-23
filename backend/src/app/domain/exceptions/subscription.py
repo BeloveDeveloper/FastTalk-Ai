@@ -7,3 +7,7 @@ class SubscriptionAlreadyExistsError(DomainError):
 
 class SubscriptionDoesNotExistError(DomainError):
     pass
+
+
+class TokenNotFoundError(DomainError):
+    pass

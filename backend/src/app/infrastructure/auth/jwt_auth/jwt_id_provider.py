@@ -1,6 +1,6 @@
-from .jwt_service import TokenPayloadDTO
 from app.application.interfaces.id_provider import IdProvider
 from app.domain.entities.user_id import UserId
+from app.infrastructure.auth.jwt_auth.jwt_service import TokenPayloadDTO
 
 
 class TokenIdProvider(IdProvider):
