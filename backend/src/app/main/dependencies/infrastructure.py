@@ -21,30 +21,21 @@ from app.infrastructure.database.mappers.subscription import SubcriptionMapper
 
 class AuthProvider(Provider):
     @provide(scope=Scope.APP)
-    def get_password_hasher(
-            self
-    ) -> PasswordHasher:
+    def get_password_hasher(self) -> PasswordHasher:
         return PasswordHasher()
 
     @provide(scope=Scope.APP)
     def get_jwt_service(self) -> JwtProcessor:
-        return JwtProcessor(
-            private_key=os.getenv("JWT_SECRET"),
-            algorithm="HS256"
-        )
+        return JwtProcessor(private_key=os.getenv("JWT_SECRET"), algorithm="HS256")
 
     @provide(scope=Scope.REQUEST)
     async def get_auth_service(
-            self,
-            user_gateway: UserGateway,
-            hasher: PasswordHasher,
-            jwt: JwtProcessor,
+        self,
+        user_gateway: UserGateway,
+        hasher: PasswordHasher,
+        jwt: JwtProcessor,
     ) -> AuthService:
-        return AuthService(
-            user_gateway,
-            hasher,
-            jwt
-        )
+        return AuthService(user_gateway, hasher, jwt)
 
 
 class DatabaseProvider(Provider):
@@ -61,43 +52,30 @@ class DatabaseProvider(Provider):
         return engine
 
     @provide(scope=Scope.APP)
-    def get_session_pool(
-            self, engine: AsyncEngine
-    ) -> async_sessionmaker[AsyncSession]:
+    def get_session_pool(self, engine: AsyncEngine) -> async_sessionmaker[AsyncSession]:
         session_pool = async_sessionmaker(bind=engine, expire_on_commit=False)
         return session_pool
 
     @provide(scope=Scope.REQUEST)
     async def get_session(
-            self, session_pool: async_sessionmaker[AsyncSession]
+        self, session_pool: async_sessionmaker[AsyncSession]
     ) -> AsyncIterator[AsyncSession]:
         async with session_pool() as session:
             yield session
 
     @provide(scope=Scope.REQUEST, provides=UoW)
-    async def get_uow(
-            self, session: AsyncSession
-    ) -> AsyncIterator[AsyncSession]:
+    async def get_uow(self, session: AsyncSession) -> AsyncIterator[AsyncSession]:
         return session
 
 
 class MapperProvider(Provider):
     @provide(scope=Scope.REQUEST, provides=UserGateway)
-    async def get_user_mapper(
-            self, session: AsyncSession
-    ) -> UserMapper:
+    async def get_user_mapper(self, session: AsyncSession) -> UserMapper:
         return UserMapper(session)
 
     @provide(scope=Scope.REQUEST, provides=SubscriptionGateway)
-    async def get_subscription_mapper(
-            self, session: AsyncSession
-    ) -> SubcriptionMapper:
+    async def get_subscription_mapper(self, session: AsyncSession) -> SubcriptionMapper:
         return SubcriptionMapper(session)
 
 
-class InfrastructureProvider(
-    AuthProvider,
-    DatabaseProvider,
-    MapperProvider
-):
-    ...
+class InfrastructureProvider(AuthProvider, DatabaseProvider, MapperProvider): ...

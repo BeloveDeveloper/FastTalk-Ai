@@ -12,22 +12,16 @@ admin_router = APIRouter(route_class=DishkaRoute)
 
 
 @admin_router.get("/users")
-async def get_users():
-    ...
+async def get_users(): ...
 
 
 @admin_router.get("/users/{id}")
-async def get_user_by_id(
-        get_user: Depends[GetUserInteractor],
-        id: UserId
-) -> User:
+async def get_user_by_id(get_user: Depends[GetUserInteractor], id: UserId) -> User:
     user = await get_user(GetUserDTO(id))
     return user
 
 
 @admin_router.put("/users/{id}/active_status")
-async def change_active_status(
-        id: UserId
-):
+async def change_active_status(id: UserId):
     ...
     return

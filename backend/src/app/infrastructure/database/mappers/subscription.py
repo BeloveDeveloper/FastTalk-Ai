@@ -8,7 +8,7 @@ from app.domain.entities.subscription import Subscription
 from app.infrastructure.database.models import SubscriptionDB
 from app.application.dto.subscription import (
     CreateSubscriptionDTO,
-    UpdateSubscriptionDTO
+    UpdateSubscriptionDTO,
 )
 
 
@@ -23,41 +23,35 @@ class SubcriptionMapper(SubscriptionGateway):
             title=row.title,
             description=row.description,
             price=row.price,
-            req_limit=row.req_limit
+            req_limit=row.req_limit,
         )
 
     async def add(self, subscription: CreateSubscriptionDTO) -> None:
-        statement = (
-            Insert(SubscriptionDB)
-            .values(
-                title=subscription.title,
-                description=subscription.description,
-                price=subscription.price,
-                req_limit=subscription.req_limit,
-            )
+        statement = Insert(SubscriptionDB).values(
+            title=subscription.title,
+            description=subscription.description,
+            price=subscription.price,
+            req_limit=subscription.req_limit,
         )
         await self.session.execute(statement)
         return
 
     async def update(self, data: UpdateSubscriptionDTO) -> None:
+        values_to_update = {
+            key: value for key, value in data.__dict__.items() if value is not None
+        }
+
         statement = (
             Update(SubscriptionDB)
             .where(SubscriptionDB.id == data.id)
-            .values(
-                title=data.title,
-                description=data.description,
-                price=data.price,
-                req_limit=data.req_limit,
-            )
+            .values(**values_to_update)
         )
+
         await self.session.execute(statement)
         return
 
     async def delete(self, subscription_id: int) -> None:
-        statement = (
-            Delete(SubscriptionDB)
-            .where(SubscriptionDB.id == subscription_id)
-        )
+        statement = Delete(SubscriptionDB).where(SubscriptionDB.id == subscription_id)
         await self.session.execute(statement)
         return
 

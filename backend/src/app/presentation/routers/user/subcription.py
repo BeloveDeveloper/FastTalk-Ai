@@ -3,7 +3,7 @@ from dishka.integrations.fastapi import DishkaRoute
 from fastapi import APIRouter
 
 
-user_sub_router = APIRouter(prefix='/sub', route_class=DishkaRoute)
+user_sub_router = APIRouter(prefix="/sub", route_class=DishkaRoute)
 
 
 @user_sub_router.get("/")

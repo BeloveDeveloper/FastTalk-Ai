@@ -8,10 +8,7 @@ from app.infrastructure.auth.jwt_auth.jwt_service import JwtProcessor
 
 class AuthService:
     def __init__(
-            self,
-            user_gateway: UserGateway,
-            hasher: IPasswordHasher,
-            jwt: JwtProcessor
+        self, user_gateway: UserGateway, hasher: IPasswordHasher, jwt: JwtProcessor
     ) -> None:
         self.user_gateway = user_gateway
         self.hasher = hasher

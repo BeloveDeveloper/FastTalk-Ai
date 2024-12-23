@@ -28,28 +28,23 @@ class UserMapper(UserGateway):
         )
 
     async def add(self, user: CreateUserDTO) -> None:
-        statement = (
-            Insert(UserDB)
-            .values(
-                username=user.username,
-                email=user.email,
-                telegram_id=user.telegram_id,
-                phone_number=user.phone_number,
-                password_hash=user.password,
-            )
+        statement = Insert(UserDB).values(
+            username=user.username,
+            email=user.email,
+            telegram_id=user.telegram_id,
+            phone_number=user.phone_number,
+            password_hash=user.password,
         )
         await self.session.execute(statement)
         return
 
     async def change_active_status(self, user_id: int, is_active: bool) -> None:
-        stmt = (
-            Update(UserDB).where(UserDB.id == user_id).values(is_active=is_active)
-        )
+        stmt = Update(UserDB).where(UserDB.id == user_id).values(is_active=is_active)
         await self.session.execute(stmt)
         return
 
     async def check_data_unique(
-            self, username: str, telegram_id: int, email: str
+        self, username: str, telegram_id: int, email: str
     ) -> bool:
         conditions = [UserDB.username == username]
 

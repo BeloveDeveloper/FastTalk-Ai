@@ -4,7 +4,7 @@ from typing import Optional, Protocol
 from app.domain.entities.subscription import Subscription
 from app.application.dto.subscription import (
     CreateSubscriptionDTO,
-    UpdateSubscriptionDTO
+    UpdateSubscriptionDTO,
 )
 
 
@@ -30,7 +30,5 @@ class SubscriptionGateway(Protocol):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_subscription_by_id(
-            self, sub_id: int
-    ) -> Optional[Subscription]:
+    async def get_subscription_by_id(self, sub_id: int) -> Optional[Subscription]:
         raise NotImplementedError

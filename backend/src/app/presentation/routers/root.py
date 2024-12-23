@@ -15,7 +15,7 @@ root_router = APIRouter()
 root_router.include_router(
     auth_router,
     prefix="/auth",
-    tags=["auth"],   
+    tags=["auth"],
 )
 
 root_router.include_router(
@@ -27,7 +27,7 @@ root_router.include_router(
 root_router.include_router(
     user_router,
     prefix="/me",
-    tags=["user"],   
+    tags=["user"],
 )
 
 root_router.include_router(
@@ -39,11 +39,11 @@ root_router.include_router(
 root_router.include_router(
     user_chat_router,
     prefix="/me",
-    tags=["user", "user chats"],   
+    tags=["user", "user chats"],
 )
 
 root_router.include_router(
     sub_router,
     prefix="/sub",
-    tags=["subcriptions"],   
+    tags=["subcriptions"],
 )

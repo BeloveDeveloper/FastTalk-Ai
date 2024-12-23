@@ -21,9 +21,7 @@ class RegisterInteractor(Interactor[CreateUserDTO, None]):
 
     async def __call__(self, data: CreateUserDTO) -> None:
         user_exist = await self.user_gateway.check_data_unique(
-            username=data.username,
-            telegram_id=data.telegram_id,
-            email=data.email
+            username=data.username, telegram_id=data.telegram_id, email=data.email
         )
 
         if user_exist:

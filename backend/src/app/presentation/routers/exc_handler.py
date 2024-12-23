@@ -10,9 +10,8 @@ error_map = {
     user_exc.RequestLimitExceededError: (429, "Request limit exceeded"),
     user_exc.UserDoesNotExistError: (404, "User does not exist"),
     user_exc.UserNotActiveError: (403, "User not active"),
-
     sub_exc.SubscriptionAlreadyExistsError: (409, "Subscription already exists"),
-    sub_exc.SubscriptionDoesNotExistError: (404, "Subscription does not exist")
+    sub_exc.SubscriptionDoesNotExistError: (404, "Subscription does not exist"),
 }
 
 

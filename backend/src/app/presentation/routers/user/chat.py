@@ -15,26 +15,22 @@ async def get_chats():
 @user_chat_router.post("/")
 async def create_new_chat():
     ...
-    return 
+    return
 
 
 @user_chat_router.delete("/")
 async def delete_chat():
     ...
-    return 
+    return
 
 
 @user_chat_router.get("/{id}/messages")
-async def get_messages_by_chat_id(
-    id: int
-):
+async def get_messages_by_chat_id(id: int):
     ...
-    return 
+    return
 
 
 @user_chat_router.post("/{id}/messages")
-async def send_message(
-    id: int
-):
+async def send_message(id: int):
     ...
     return

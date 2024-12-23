@@ -17,7 +17,6 @@ class CreateSubscriptionDTO:
 
 @dataclass
 class UpdateSubscriptionDTO:
-    id: int
     title: Optional[str] = None
     description: Optional[str] = None
     price: Optional[int] = None
