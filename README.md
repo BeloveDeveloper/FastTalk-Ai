@@ -1,4 +1,4 @@
-# NeuroGram 🧠
+# FastTalk AI 🧠
 
 This project aims to seamlessly integrate your language model into a user-friendly web platform and Telegram bot, providing users with an interactive and engaging experience. In this project, I am trying to use the principles of clean architecture to ensure the reliability, maintainability and scalability of the application
 
