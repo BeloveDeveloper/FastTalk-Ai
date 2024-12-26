@@ -1,5 +1,7 @@
-__all__ = ["Base", "UserDB", "SubscriptionDB"]
+__all__ = ["Base", "SubscriptionDB", "UserDB", "ChatDB", "MessageDB"]
 
 from .base import Base
-from .user import UserDB
 from .subscription import SubscriptionDB
+from .user import UserDB
+from .chat import ChatDB
+from .message import MessageDB

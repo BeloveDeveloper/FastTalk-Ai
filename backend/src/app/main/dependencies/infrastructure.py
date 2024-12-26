@@ -1,7 +1,9 @@
 import os
 from typing import AsyncIterator
 
+from app.application.interfaces.gateways.chat import ChatGateway
 from app.domain.exceptions.subscription import TokenNotFoundError
+from app.infrastructure.database.mappers.chat import ChatMapper
 from dishka import Provider, Scope, from_context, provide
 from fastapi import Request
 from sqlalchemy.ext.asyncio import (
@@ -94,6 +96,10 @@ class MapperProvider(Provider):
     @provide(scope=Scope.REQUEST, provides=SubscriptionGateway)
     async def get_subscription_mapper(self, session: AsyncSession) -> SubcriptionMapper:
         return SubcriptionMapper(session)
+
+    @provide(scope=Scope.REQUEST, provides=ChatGateway)
+    async def get_chat_mapper(self, session: AsyncSession) -> ChatMapper:
+        return ChatMapper(session)
 
 
 class InfrastructureProvider(AuthProvider, DatabaseProvider, MapperProvider): ...

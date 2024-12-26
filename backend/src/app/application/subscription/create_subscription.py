@@ -6,7 +6,7 @@ from app.domain.exceptions.subscription import SubscriptionAlreadyExistsError
 
 
 class CreateSubscriptionInteractor(Interactor[CreateSubscriptionDTO, None]):
-    def __init__(self, sub_gateway: SubscriptionGateway, uow: UoW):
+    def __init__(self, sub_gateway: SubscriptionGateway, uow: UoW) -> None:
         self.sub_gateway = sub_gateway
         self.uow = uow
 

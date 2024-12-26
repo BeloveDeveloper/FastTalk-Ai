@@ -1,3 +1,11 @@
+from app.application.chat.chat_history import GetChatHistoryInteractor
+from app.application.chat.create_chat import CreateChatInteractor
+from app.application.chat.delete_chat import DeleteChatInteractor
+from app.application.chat.get_chats import GetChatsInteractor
+from app.application.chat.save_message import SaveMessageInteractor
+from app.application.interfaces.gateways.chat import ChatGateway
+from app.domain.services.access import AccessService
+from app.infrastructure.auth.jwt_auth.jwt_id_provider import TokenIdProvider
 from dishka import Provider, Scope, provide
 
 from app.application.interfaces.uow import UoW
@@ -21,11 +29,11 @@ from app.infrastructure.auth.jwt_auth.password_hasher import PasswordHasher
 
 class UserProvider(Provider):
     @provide(scope=Scope.REQUEST)
-    def get_user_interactor(self, user_gateway: UserGateway) -> GetUserInteractor:
+    async def get_user_interactor(self, user_gateway: UserGateway) -> GetUserInteractor:
         return GetUserInteractor(user_gateway)
 
     @provide(scope=Scope.REQUEST)
-    def get_register_interactor(
+    async def get_register_interactor(
         self, user_gateway: UserGateway, uow: UoW, password_hasher: PasswordHasher
     ) -> RegisterInteractor:
         return RegisterInteractor(user_gateway, uow, password_hasher)
@@ -33,19 +41,19 @@ class UserProvider(Provider):
 
 class SubscriptionProvider(Provider):
     @provide(scope=Scope.REQUEST)
-    def get_subcriptions_interactor(
+    async def get_subcriptions_interactor(
         self, sub_gateway: SubscriptionGateway
     ) -> GetSubscriptionsInteractor:
         return GetSubscriptionsInteractor(sub_gateway)
 
     @provide(scope=Scope.REQUEST)
-    def get_subcription_interactor(
+    async def get_subcription_interactor(
         self, sub_gateway: SubscriptionGateway
     ) -> GetSubscriptionInteractor:
         return GetSubscriptionInteractor(sub_gateway)
 
     @provide(scope=Scope.REQUEST)
-    def get_create_sub_interactor(
+    async def get_create_sub_interactor(
         self,
         sub_gateway: SubscriptionGateway,
         uow: UoW,
@@ -56,7 +64,7 @@ class SubscriptionProvider(Provider):
         )
 
     @provide(scope=Scope.REQUEST)
-    def get_update_sub_interactor(
+    async def get_update_sub_interactor(
         self,
         sub_gateway: SubscriptionGateway,
         uow: UoW,
@@ -67,7 +75,7 @@ class SubscriptionProvider(Provider):
         )
 
     @provide(scope=Scope.REQUEST)
-    def get_delete_sub_interactor(
+    async def get_delete_sub_interactor(
         self,
         sub_gateway: SubscriptionGateway,
         uow: UoW,
@@ -78,7 +86,75 @@ class SubscriptionProvider(Provider):
         )
 
 
-class ApplicationProvieder(
-    UserProvider,
-    SubscriptionProvider,
-): ...
+class ChatProvider(Provider):
+    @provide(scope=Scope.REQUEST)
+    async def get_chat_history_interactor(
+        self,
+        chat_gateway: ChatGateway,
+        access: AccessService,
+        id_provider: TokenIdProvider,
+    ) -> GetChatHistoryInteractor:
+        return GetChatHistoryInteractor(chat_gateway, access, id_provider)
+
+    @provide(scope=Scope.REQUEST)
+    async def get_create_chat_interactor(
+        self, chat_gateway: ChatGateway, uow: UoW, id_provider: TokenIdProvider
+    ) -> CreateChatInteractor:
+        return CreateChatInteractor(chat_gateway, uow, id_provider)
+
+    @provide(scope=Scope.REQUEST)
+    async def get_delete_chat_interactor(
+        self,
+        chat_gateway: ChatGateway,
+        access: AccessService,
+        id_provider: TokenIdProvider,
+        uow: UoW,
+    ) -> DeleteChatInteractor:
+        return DeleteChatInteractor(
+            chat_gateway,
+            uow,
+            access,
+            id_provider,
+        )
+
+    @provide(scope=Scope.REQUEST)
+    async def get_chats_interactor(
+        self, chat_gateway: ChatGateway, id_provider: TokenIdProvider
+    ) -> GetChatsInteractor:
+        return GetChatsInteractor(
+            chat_gateway,
+            id_provider,
+        )
+
+    @provide(scope=Scope.REQUEST)
+    async def get_save_messages_interactor(
+        self,
+        chat_gateway: ChatGateway,
+        access: AccessService,
+        id_provider: TokenIdProvider,
+        uow: UoW,
+    ) -> SaveMessageInteractor:
+        return SaveMessageInteractor(
+            chat_gateway,
+            uow,
+            access,
+            id_provider,
+        )
+
+    # @provide(scope=Scope.REQUEST)
+    # def get_send_messages_interactor(
+    #     self,
+    #     chat_gateway: ChatGateway,
+    #     access: AccessService,
+    #     id_provider: TokenIdProvider,
+    #     uow: UoW,
+    # ) -> SaveMessageInteractor:
+    #     return SaveMessageInteractor(
+    #         chat_gateway,
+    #         uow,
+    #         access,
+    #         id_provider,
+    #     )
+
+
+class ApplicationProvieder(UserProvider, SubscriptionProvider, ChatProvider): ...

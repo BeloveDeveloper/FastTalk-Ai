@@ -14,7 +14,7 @@ class RegisterInteractor(Interactor[CreateUserDTO, None]):
         user_gateway: UserGateway,
         uow: UoW,
         hash_service: IPasswordHasher,
-    ):
+    ) -> None:
         self.user_gateway = user_gateway
         self.hash_service = hash_service
         self.uow = uow

@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Optional, Protocol
+from typing import List, Optional, Protocol
 
 from app.domain.entities.subscription import Subscription
 from app.application.dto.subscription import (
@@ -26,7 +26,7 @@ class SubscriptionGateway(Protocol):
         raise NotImplementedError
 
     @abstractmethod
-    async def get_subscriptions(self) -> list[Subscription]:
+    async def get_subscriptions(self) -> List[Subscription]:
         raise NotImplementedError
 
     @abstractmethod

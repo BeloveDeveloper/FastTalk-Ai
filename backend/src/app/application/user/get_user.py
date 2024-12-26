@@ -6,7 +6,7 @@ from app.domain.exceptions.user import UserDoesNotExistError
 
 
 class GetUserInteractor(Interactor[GetUserDTO, User]):
-    def __init__(self, user_gateway: UserGateway):
+    def __init__(self, user_gateway: UserGateway) -> None:
         self.user_gateway = user_gateway
 
     async def __call__(self, data: GetUserDTO) -> User:

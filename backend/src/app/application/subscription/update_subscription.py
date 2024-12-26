@@ -5,7 +5,7 @@ from app.application.dto.subscription import UpdateSubscriptionDTO
 
 
 class UpdateSubscriptionInteractor(Interactor[UpdateSubscriptionDTO, None]):
-    def __init__(self, sub_gateway: SubscriptionGateway, uow: UoW):
+    def __init__(self, sub_gateway: SubscriptionGateway, uow: UoW) -> None:
         self.sub_gateway = sub_gateway
         self.uow = uow
 

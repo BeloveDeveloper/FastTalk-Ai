@@ -9,7 +9,7 @@ class GetSubscriptionsInteractor(Interactor[None, List[Subscription]]):
     def __init__(
         self,
         sub_gateway: SubscriptionGateway,
-    ):
+    ) -> None:
         self.sub_gateway = sub_gateway
 
     async def __call__(self) -> List[Subscription]:

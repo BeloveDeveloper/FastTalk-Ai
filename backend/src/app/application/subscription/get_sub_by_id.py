@@ -6,7 +6,7 @@ from app.domain.exceptions.subscription import SubscriptionDoesNotExistError
 
 
 class GetSubscriptionInteractor(Interactor[GetSubcriptionDTO, Subscription]):
-    def __init__(self, user_gateway: SubscriptionGateway):
+    def __init__(self, user_gateway: SubscriptionGateway) -> None:
         self.user_gateway = user_gateway
 
     async def __call__(self, data: GetSubcriptionDTO) -> Subscription:
