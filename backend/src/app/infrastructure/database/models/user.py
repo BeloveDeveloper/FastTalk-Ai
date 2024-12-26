@@ -16,6 +16,6 @@ class UserDB(Base):
     is_premium: Mapped[bool] = mapped_column(Boolean, default=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
-    chats: Mapped[list["ChatDB"]] = relationship(
-        "ChatDB", back_populates="user", cascade="all, delete-orphan"  # type: ignore
+    chats: Mapped[list["ChatDB"]] = relationship(  # type: ignore
+        "ChatDB", back_populates="user", cascade="all, delete-orphan"
     )
