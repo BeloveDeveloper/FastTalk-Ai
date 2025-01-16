@@ -1,0 +1,35 @@
+services:
+  pg_database:
+    image: postgres:16-alpine
+    ports:
+      - "5439:5432"
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db
+
+  db_redis:
+    container_name: db_redis
+    ports:
+      - "6380:6379"
+    image: redis:7-alpine
+
+  # api:
+  #   build: ./backend
+  #   image: talk_api:1.0
+  #   ports:
+  #    - "8000:8000"
+  #   environment:
+  #     - DB_URL=postgresql+asyncpg://postgres:your_password_here@db_postgres:5432/db
+  #     - REDIS_URL=redis://db_redis:6379
+  #     - JWT_SECRET='kefmlkrggrn1kf4244'
+  #   volumes:
+  #    - ./backend/src/app:/app/src/app
+  #   depends_on:
+  #     - db_postgres
+  #     - db_redis
+
+volumes:
+  pgdata:

@@ -17,6 +17,7 @@ bcrypt = "^4.2.1"
 pyjwt = "^2.10.1"
 dishka = "^1.4.2"
 asyncpg = "^0.30.0"
+redis = "^5.2.1"
 
 
 [tool.poetry.group.dev.dependencies]

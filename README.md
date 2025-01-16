@@ -19,6 +19,7 @@ git clone https://github.com/DmitriySergeevic/NeuroGram.git
 export BOT_TOKEN='Your telegram bot token'
 export DB_URL='postgresql+asyncpg://postgres:postgres@localhost:5432/neurogram'
 export JWT_SECRET='Some secret long string to work with JWT tokens'
+export REDIS_URL='redis://db_redis:6380'
 ```
 **3. Install poetry:**
 ```bash
@@ -27,5 +28,5 @@ poetry install
 ```
 **4. Start Uvicorn:**
 ```bash
-uvicorn src.neurogram.main.web:app --reload
+uvicorn src.app.main.web:app --reload
 ```
