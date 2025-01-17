@@ -17,9 +17,9 @@ git clone https://github.com/DmitriySergeevic/NeuroGram.git
 **2. Provide env variables:**
 ```bash
 export BOT_TOKEN='Your telegram bot token'
-export DB_URL='postgresql+asyncpg://postgres:postgres@localhost:5432/neurogram'
+export DB_URL='postgresql+asyncpg://postgres:password@localhost:5439/db'
 export JWT_SECRET='Some secret long string to work with JWT tokens'
-export REDIS_URL='redis://db_redis:6380'
+export REDIS_URL='redis://localhost:6380'
 ```
 **3. Install poetry:**
 ```bash

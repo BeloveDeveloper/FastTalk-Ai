@@ -24,6 +24,7 @@ from app.infrastructure.database.mappers.user import UserMapper
 from app.infrastructure.database.mappers.subscription import SubcriptionMapper
 from app.domain.exceptions.subscription import TokenNotFoundError
 
+
 class AuthProvider(Provider):
     request = from_context(provides=Request, scope=Scope.REQUEST)
 
@@ -64,8 +65,9 @@ class DatabaseProvider(Provider):
         engine = create_async_engine(
             os.getenv("DB_URL"),
             query_cache_size=1200,
-            pool_size=20,
-            max_overflow=200,
+            pool_size=10
+            ,
+            max_overflow=2,
             future=True,
             echo=False,
         )
@@ -87,10 +89,19 @@ class DatabaseProvider(Provider):
     async def get_uow(self, session: AsyncSession) -> AsyncIterator[AsyncSession]:
         return session
 
+
 class RedisProvider(Provider):
     @provide(scope=Scope.APP)
-    def get_engine(self) -> Redis:
-        ...
+    def get_connection_pool(self) -> ConnectionPool: 
+        redis_url = os.getenv('REDIS_URL')
+        connection_pool = ConnectionPool.from_url(redis_url)
+        return connection_pool
+
+    @provide(scope=Scope.REQUEST)
+    async def get_connection(self, connection_pool: ConnectionPool) -> Redis:
+        connection = Redis(connection_pool=connection_pool, decode_responses=True)
+        return connection
+
 
 class MapperProvider(Provider):
     @provide(scope=Scope.REQUEST, provides=UserGateway)
@@ -98,12 +109,12 @@ class MapperProvider(Provider):
         return UserMapper(session)
 
     @provide(scope=Scope.REQUEST, provides=SubscriptionGateway)
-    async def get_subscription_mapper(self, session: AsyncSession) -> SubcriptionMapper:
-        return SubcriptionMapper(session)
+    async def get_subscription_mapper(self, session: AsyncSession, cache: Redis) -> SubcriptionMapper:
+        return SubcriptionMapper(session, cache)
 
     @provide(scope=Scope.REQUEST, provides=ChatGateway)
     async def get_chat_mapper(self, session: AsyncSession) -> ChatMapper:
         return ChatMapper(session)
 
 
-class InfrastructureProvider(AuthProvider, DatabaseProvider, MapperProvider): ...
+class InfrastructureProvider(AuthProvider, DatabaseProvider, RedisProvider, MapperProvider): ...
